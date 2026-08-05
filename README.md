@@ -1,13 +1,12 @@
 # RPC-main
 这是一个基于C++的分布式RPC服务系统
 
-
-Krpc 项目在 WSL Ubuntu 24.04 中的环境搭建、编译与运行流程
-
 ##
+本项目在 WSL Ubuntu 24.04 中的环境搭建、编译与运行流程
+
 一、安装 WSL 2
 
-首先在 Windows 的 CMD 或 PowerShell 中安装 WSL：
+首先在 Windows的CMD或PowerShell中安装 WSL：
 
 wsl --install
 
@@ -15,7 +14,7 @@ wsl --install
 
 wsl -l -v
 
-最开始系统提示：适用于 Linux 的 Windows 子系统没有已安装的分发。这表示 WSL 本身已经安装，但还没有安装 Ubuntu 等 Linux 发行版。
+最开始系统提示：适用于Linux的Windows子系统没有已安装的分发。这表示WSL本身已经安装，但还没有安装Ubuntu等Linux发行版。
 查看可以安装的发行版：
 
 wsl --list --online
@@ -30,7 +29,7 @@ wsl -d Ubuntu-24.04
 ##
 二、创建用户
 
-Ubuntu 第一次启动时要求创建 Linux 用户。注意事项：Linux 用户名不能以数字开头、设置用户密码时，终端不会显示字符或星号，这是正常现象。
+Ubuntu 第一次启动时要求创建Linux用户。注意事项：Linux 用户名不能以数字开头、设置用户密码时，终端不会显示字符或星号，这是正常现象。
 
 ##
 三、更新Ubuntu并安装基础C++编译环境
