@@ -8,27 +8,30 @@ Krpc 项目在 WSL Ubuntu 24.04 中的环境搭建、编译与运行流程
 一、安装 WSL 2
 首先在 Windows 的 CMD 或 PowerShell 中安装 WSL：
 wsl --install
+
 安装完成后检查：
 wsl -l -v
-最开始系统提示：
-适用于 Linux 的 Windows 子系统没有已安装的分发
-这表示 WSL 本身已经安装，但还没有安装 Ubuntu 等 Linux 发行版。
+
+最开始系统提示：适用于 Linux 的 Windows 子系统没有已安装的分发。这表示 WSL 本身已经安装，但还没有安装 Ubuntu 等 Linux 发行版。
 查看可以安装的发行版：
 wsl --list --online
+
 安装 Ubuntu 24.04：
 wsl --install -d Ubuntu-24.04
+
 安装完成后启动：
 wsl -d Ubuntu-24.04
 ##
 二、创建用户
-Ubuntu 第一次启动时要求创建 Linux 用户
-注意事项：Linux 用户名不能以数字开头、设置用户密码时，终端不会显示字符或星号，这是正常现象。
+Ubuntu 第一次启动时要求创建 Linux 用户。注意事项：Linux 用户名不能以数字开头、设置用户密码时，终端不会显示字符或星号，这是正常现象。
 ##
 三、更新Ubuntu并安装基础C++编译环境
 进入 Ubuntu 后先更新软件包：
 sudo apt update
 sudo apt upgrade -y
+
 安装 C++ 编译和调试工具：
+
 sudo apt install -y \
   build-essential \
   gdb \
@@ -37,33 +40,46 @@ sudo apt install -y \
   wget \
   unzip
 其中：
+
 gcc：C 编译器
 g++：C++ 编译器
 make：构建工具
 gdb：调试器
 git：代码版本管理工具
+
 检查安装：
+
 g++ --version
 gcc --version
 make --version
 gdb --version
 ##
 四、安装 CMake、Ninja 和 pkg-config
+
 执行：
+
 sudo apt install -y cmake ninja-build pkg-config
+
 检查版本：
+
 cmake --version
 ninja --version
 pkg-config --version
+
 ##
 五、将Windows项目（假设在D盘）复制到 WSL
+
 Windows中的项目路径是：D:\Krpc-main
+
 创建 Linux 项目目录：
 mkdir -p ~/projects
+
 复制项目：
 cp -a "/mnt/d/Krpc-main" ~/projects/
+
 进入项目：
 cd ~/projects/Krpc-main
+
 ##
 六、安装本项目所用的Protobuf、Muduo、glog和ZooKeeper开发库
 1、安装Protobuf命令：
