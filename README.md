@@ -1,6 +1,14 @@
 # RPC-main
 这是一个基于C++的分布式RPC服务系统
 
+## 客户端运行结果
+
+![Krpc 客户端运行结果](Krpc/img/client.png)
+
+## 服务端运行结果
+
+![Krpc 服务端运行结果](Krp/cimg/server.png)
+
 ##
 本项目在 WSL Ubuntu 24.04 中的环境搭建、编译与运行流程
 
