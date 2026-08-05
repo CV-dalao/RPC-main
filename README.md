@@ -3,11 +3,11 @@
 
 ## 客户端运行结果
 
-![Krpc 客户端运行结果](Krpc/img/client.png)
+![Krpc 客户端运行结果](Krpc-main/img/client.png)
 
 ## 服务端运行结果
 
-![Krpc 服务端运行结果](Krp/cimg/server.png)
+![Krpc 服务端运行结果](Krpc-main/img/server.png)
 
 ##
 本项目在 WSL Ubuntu 24.04 中的环境搭建、编译与运行流程
