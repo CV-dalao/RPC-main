@@ -113,13 +113,16 @@ sudo ldconfig
 3、安装glog和ZooKeeper 开发库命令：
 
 sudo apt install -y \ libgoogle-glog-dev \ libgflags-dev
+
 sudo apt install -y libzookeeper-mt-dev
+
 sudo apt install -y zookeeperd zookeeper-bin
 
 ##
 七、编译项目
 
 cd ~/projects/Krpc-main
+
 rm -rf build
 
 配置：
@@ -133,6 +136,7 @@ cmake --build build -j$(nproc)
 先创建临时输出目录：
 
 rm -rf /tmp/krpc_pb
+
 mkdir -p /tmp/krpc_pb
 
 使用当前版本的 protoc 重新生成：
