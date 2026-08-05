@@ -51,12 +51,7 @@ sudo apt upgrade -y
 安装 C++ 编译和调试工具：
 
 sudo apt install -y \
-  build-essential \
-  gdb \
-  git \
-  curl \
-  wget \
-  unzip
+  build-essential \ gdb \ git \ curl \ wget \ unzip
   
 其中：
 
