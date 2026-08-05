@@ -1,116 +1,136 @@
-# Krpc
+Krpc 项目在 WSL Ubuntu 24.04 中的环境搭建、编译与运行流程
 
-> **本项目目前只在[知识星球](https://programmercarl.com/other/kstar.html)答疑并维护**。
-
-本项目如果是有C++语法基础的录友，且做过[知识星球](https://programmercarl.com/other/kstar.html)的：[基于Raft共识算法的KV数据库](https://programmercarl.com/other/project_fenbushi.html)，[协程库](https://programmercarl.com/other/project_coroutine.html)，那大家上手这个项目的时间会非常快：
-
-学习时间：一天只需要抽3-4个小时，看3天左右基本能看完整个项目。
-
-如果你还是新手，很多理论知识还要从头学习，如果一天学6-8小时，大概需要两周基本能完成这个RPC项目。
-
-## 做完本项目你讲收获
-
-* 深入理解RPC框架原理与分布式系统设计
-* 夯实C++面向对象、STL、设计模式核心功底
-* 掌握Socket、TCP/UDP及高并发I/O模型（epoll）
-* 基于Muduo库实现Reactor网络模型，解耦业务与通信
-* 熟练使用Protobuf定义消息、实现高效序列化/反序列化
-* 设计自定义协议，解决TCP粘包/拆包问题
-* 集成Zookeeper作为注册中心，实现服务注册与发现
-* 运用Watcher机制动态感知服务状态，保障高可用
-* 从0到1打造高性能RPC框架，获得分布式系统开发经验
-* 提升解决复杂工程问题（协议设计、高并发、解耦）的能力
-
-## 为什么要做c++版的rpc？
-
-1.高性能需求
-
-c++以其高效的内存管理和底层控制能力，成为性能要求比较高的系统(如金融、游戏服务器、实时通信系统)的首选语言。
-
-在这些场景下，RPC框架需要尽可能减少通信开销，而C++天生的性能优势可以满足这一需要求。
-
-
-2.系统级开发
-
-很多底层基础设施(如数据库、中间件、分布式存储系统)都是用c++开发。
-
-这些系统需要一个与语言无缝结合的高效RPC框架，避免因语言间的切换导致性能损耗
-
-
-3.跨平台
-
-C++的可移植性在不同平台(如linux、Windows、嵌入式系统)上广泛使用。
-
-一个C++RPC框架能够为这些多平台环境提供统一的通信接口，降低开发成本。
-
-4.灵活性与可扩展性
-
-与某些语言的封闭生态不同，C++允许开发者灵活地调整底层实现。例如：可以定制序列化协议(如Protobuf、Thrift)、网络传输方式(如TCP、UDP、QUIC)等，以满足不同场景的需求。
-
-关于C++版RPC框架的使用场景：
-
-* 微服务架构：在微服务架构中，服务通常分布在不同的网络和不同的服务器上，此时就需要一个高效的通信手段就是我们的rpc。
-* 实时通信：如在线游戏、视频直播、即时通信等场景，要求低延迟和高吞吐。C++RPC可以通过优化网络传输协议和序列化协议，提供实时性保障。
-* 分布式存储与计算：像hadoop、或者你做个raft的共识算法的话，也可也发现我们在不同节点之间使用rpc传递数据进行通信。
-* 嵌入式系统： 在嵌入式设备之间的通信中，资源有限且性能要求严格。C++的轻量级特性使其成为嵌入式RPC实现的理想选择。
-* 跨语言调用： C++ RPC框架通常支持多语言绑定（如Python、Java），可以用作跨语言调用的桥梁。例如，在后端服务使用C++开发的情况下，前端服务可以通过RPC框架调用其功能。
-
-## 项目专栏
-
-在项目专栏中， 该**项目简历如何写、性能如何测试、项目怎么优化、面试都会问哪些问题**，都安排好了。
-
-不仅如此，还有 「技术栈需求」「运行环境」「RPC理论」「日志库」「代码解读」
-
-### 简历写法
-
-专栏里直接给出简历写法， 项目难点 和 个人收获是面试官最关心的部分。
-
-<div align="center"><img src='https://file1.kamacoder.com/i/algo/20250103223303.png' width=500 alt=''></img></div>
-
-在[知识星球](https://programmercarl.com/other/kstar.html)RPC项目专栏 会给出本项目的参考简历写法，为了不让 这些写法重复率太高，所以公众号上是打码的。
-
-### 性能测试
-
-带大家测试RPC的性能，更充分了解 系统的表现。
-
-<div align="center"><img src='https://file1.kamacoder.com/i/algo/20250103224011.png' width=500 alt=''></img></div>
-
-### 项目优化
-
-项目文档列出的十几个优化点：
-
-<div align="center"><img src='https://file1.kamacoder.com/i/algo/20250103224306.png' width=500 alt=''></img></div>
-
-涉及到 「通信模块」 「服务注册与发现模块」「负载均衡模块」「零拷贝优化技术」「日志与监控模块」「健康检测与熔断机制」「重试与超时处理」
-
-从各个方面，带大家去了解项目如何进一步优化，帮助大家找到可以拓展的方向，打造自己的项目竞争力，也避免了项目重复。
-
-### 代码讲解
-
-给出项目整体流程图：
-
-<div align="center"><img src='https://file1.kamacoder.com/i/algo/20250103224628.png' width=500 alt=''></img></div>
-
-其中项目的所有代码以及每个函数和类都有详细解释，根本不用担心自己看不懂：
-
-<div align="center"><img src='https://file1.kamacoder.com/i/algo/20250103224733.png' width=500 alt=''></img></div>
-
-同时我们对项目中需要用到的日志库做了详细的分析：
-
-<div align="center"><img src='https://file1.kamacoder.com/i/algo/20250103225024.png' width=500 alt=''></img></div>
-
-### RPC理论
-
-项目文档帮大家梳理清楚 RPC 的来龙去脉 ：
-
-<div align="center"><img src='https://file1.kamacoder.com/i/algo/20250103224858.png' width=500 alt=''></img></div>
-
-### 突击来用
-
-如果大家面试在即，实在没时间做项目了，可以直接按照专栏给出的简历写法，写到简历上，然后把项目专栏里的面试问题，都认真背一背就好了，基本覆盖 绝大多数 RPC项目问题。
-
-
-## 获取本项目专栏
-
-本文档仅为星球内部专享，大家可以加入[知识星球](https://programmercarl.com/other/kstar.html)里获取。
-
+##
+一、安装 WSL 2
+首先在 Windows 的 CMD 或 PowerShell 中安装 WSL：
+wsl --install
+安装完成后检查：
+wsl -l -v
+最开始系统提示：
+适用于 Linux 的 Windows 子系统没有已安装的分发
+这表示 WSL 本身已经安装，但还没有安装 Ubuntu 等 Linux 发行版。
+查看可以安装的发行版：
+wsl --list --online
+安装 Ubuntu 24.04：
+wsl --install -d Ubuntu-24.04
+安装完成后启动：
+wsl -d Ubuntu-24.04
+##
+二、创建用户
+Ubuntu 第一次启动时要求创建 Linux 用户
+注意事项：Linux 用户名不能以数字开头、设置用户密码时，终端不会显示字符或星号，这是正常现象。
+##
+三、更新Ubuntu并安装基础C++编译环境
+进入 Ubuntu 后先更新软件包：
+sudo apt update
+sudo apt upgrade -y
+安装 C++ 编译和调试工具：
+sudo apt install -y \
+  build-essential \
+  gdb \
+  git \
+  curl \
+  wget \
+  unzip
+其中：
+gcc：C 编译器
+g++：C++ 编译器
+make：构建工具
+gdb：调试器
+git：代码版本管理工具
+检查安装：
+g++ --version
+gcc --version
+make --version
+gdb --version
+##
+四、安装 CMake、Ninja 和 pkg-config
+执行：
+sudo apt install -y cmake ninja-build pkg-config
+检查版本：
+cmake --version
+ninja --version
+pkg-config --version
+##
+五、将Windows项目（假设在D盘）复制到 WSL
+Windows中的项目路径是：D:\Krpc-main
+创建 Linux 项目目录：
+mkdir -p ~/projects
+复制项目：
+cp -a "/mnt/d/Krpc-main" ~/projects/
+进入项目：
+cd ~/projects/Krpc-main
+##
+六、安装本项目所用的Protobuf、Muduo、glog和ZooKeeper开发库
+1、安装Protobuf命令：
+sudo apt install -y \ protobuf-compiler \ libprotobuf-dev \ libprotoc-dev
+2、安装Muduo命令：
+(1)先安装Muduo所需依赖：sudo apt install -y \ git \ build-essential \ cmake \ make \ libboost-dev
+(2)创建第三方库目录：
+mkdir -p ~/libs
+cd ~/libs
+(3)下载 Muduo：
+git clone https://github.com/chenshuo/muduo.git
+cd muduo
+(4)编译 Muduo：
+cmake -S . -B build \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_INSTALL_PREFIX=/usr/local
+cmake --build build -j$(nproc)
+(5)安装：
+sudo cmake --install build
+sudo ldconfig
+3、安装glog和ZooKeeper 开发库命令：
+sudo apt install -y \ libgoogle-glog-dev \ libgflags-dev
+sudo apt install -y libzookeeper-mt-dev
+sudo apt install -y zookeeperd zookeeper-bin
+##
+七、编译项目
+cd ~/projects/Krpc-main
+rm -rf build
+配置：
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
+编译：
+cmake --build build -j$(nproc)
+##
+八、如果你下的是最新版本的Protobuf，那么本项目中./src/Krpcheader.proto和./example/user.proto生成的.pb.cc和.pb.h不适用，需要重新生成：
+先创建临时输出目录：
+rm -rf /tmp/krpc_pb
+mkdir -p /tmp/krpc_pb
+使用当前版本的 protoc 重新生成：
+protoc \
+  -I=src \
+  --cpp_out=/tmp/krpc_pb \
+  src/Krpcheader.proto
+生成：
+/tmp/krpc_pb/Krpcheader.pb.cc
+/tmp/krpc_pb/Krpcheader.pb.h
+备份旧文件：
+cp src/Krpcheader.pb.cc \
+   src/Krpcheader.pb.cc.bak
+cp src/include/Krpcheader.pb.h \
+   src/include/Krpcheader.pb.h.bak
+替换旧文件：
+cp /tmp/krpc_pb/Krpcheader.pb.cc \
+   src/Krpcheader.pb.cc
+cp /tmp/krpc_pb/Krpcheader.pb.h \
+   src/include/Krpcheader.pb.h
+##
+九、根据新版 Protobuf 重新生成 user.pb.cc 和 user.pb.h：
+protoc \ -I=example \ --cpp_out=example \ example/user.proto
+##
+十、编译核心库
+重新清理并构建：
+cd ~/projects/Krpc-main
+rm -rf build
+cmake -S . -B build \
+  -DCMAKE_BUILD_TYPE=Debug
+cmake --build build -j$(nproc)
+##
+十一、运行服务端
+cd ~/projects/Krpc-main/bin
+执行：./server -i ./test.conf
+##
+十二、运行客户端
+cd ~/projects/Krpc-main/bin
+./client -i ./test.conf
