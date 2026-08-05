@@ -82,75 +82,109 @@ cd ~/projects/Krpc-main
 
 ##
 六、安装本项目所用的Protobuf、Muduo、glog和ZooKeeper开发库
+
 1、安装Protobuf命令：
 sudo apt install -y \ protobuf-compiler \ libprotobuf-dev \ libprotoc-dev
+
 2、安装Muduo命令：
 (1)先安装Muduo所需依赖：sudo apt install -y \ git \ build-essential \ cmake \ make \ libboost-dev
+
 (2)创建第三方库目录：
+
 mkdir -p ~/libs
 cd ~/libs
+
 (3)下载 Muduo：
 git clone https://github.com/chenshuo/muduo.git
 cd muduo
+
 (4)编译 Muduo：
+
 cmake -S . -B build \
   -DCMAKE_BUILD_TYPE=Release \
   -DCMAKE_INSTALL_PREFIX=/usr/local
 cmake --build build -j$(nproc)
+
 (5)安装：
+
 sudo cmake --install build
 sudo ldconfig
+
 3、安装glog和ZooKeeper 开发库命令：
+
 sudo apt install -y \ libgoogle-glog-dev \ libgflags-dev
 sudo apt install -y libzookeeper-mt-dev
 sudo apt install -y zookeeperd zookeeper-bin
+
 ##
 七、编译项目
+
 cd ~/projects/Krpc-main
 rm -rf build
+
 配置：
 cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
 编译：
 cmake --build build -j$(nproc)
+
 ##
+
 八、如果你下的是最新版本的Protobuf，那么本项目中./src/Krpcheader.proto和./example/user.proto生成的.pb.cc和.pb.h不适用，需要重新生成：
 先创建临时输出目录：
+
 rm -rf /tmp/krpc_pb
 mkdir -p /tmp/krpc_pb
+
 使用当前版本的 protoc 重新生成：
+
 protoc \
   -I=src \
   --cpp_out=/tmp/krpc_pb \
   src/Krpcheader.proto
+  
 生成：
+
 /tmp/krpc_pb/Krpcheader.pb.cc
 /tmp/krpc_pb/Krpcheader.pb.h
+
 备份旧文件：
+
 cp src/Krpcheader.pb.cc \
    src/Krpcheader.pb.cc.bak
 cp src/include/Krpcheader.pb.h \
    src/include/Krpcheader.pb.h.bak
+  
 替换旧文件：
+
 cp /tmp/krpc_pb/Krpcheader.pb.cc \
    src/Krpcheader.pb.cc
 cp /tmp/krpc_pb/Krpcheader.pb.h \
    src/include/Krpcheader.pb.h
+   
 ##
 九、根据新版 Protobuf 重新生成 user.pb.cc 和 user.pb.h：
+
 protoc \ -I=example \ --cpp_out=example \ example/user.proto
+
 ##
 十、编译核心库
+
 重新清理并构建：
+
 cd ~/projects/Krpc-main
 rm -rf build
 cmake -S . -B build \
   -DCMAKE_BUILD_TYPE=Debug
 cmake --build build -j$(nproc)
+
 ##
 十一、运行服务端
+
 cd ~/projects/Krpc-main/bin
 执行：./server -i ./test.conf
+
 ##
 十二、运行客户端
+
 cd ~/projects/Krpc-main/bin
 ./client -i ./test.conf
